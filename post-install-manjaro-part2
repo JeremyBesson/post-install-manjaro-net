@@ -1,0 +1,122 @@
+#!/bin/bash
+
+echo "Now Gnome should be installed. Installing useful packages & configuration"		#    --noconfirm --needed
+
+#utilitaires pour installs
+yaout -S base-devel --noconfirm --needed
+yaourt -S binutils --noconfirm --needed
+
+#Vim
+yaourt -S vim --noconfirm --needed
+
+#Guake
+yaourt -S guake --noconfirm --needed
+
+#Gparted
+yaourt -S gparted --noconfirm --needed
+
+#libreoffice
+sudo pacman -S libreoffice --noconfirm --needed
+
+#manager settings octipi
+sudo pacman -S octopi octopi-notifier manjaro-settings-manager  --noconfirm --needed
+
+#clientsweb
+sudo pacman -S firefox --noconfirm --needed
+
+sudo pacman -S chromium --noconfirm --needed
+
+#editeur de menus
+#sudo pacman -S alacarte  --noconfirm --needed
+
+#click droit "ouvrir en admin"
+sudo pacman -S nautilus-admin  --noconfirm --needed
+
+#set swapiness a 95
+echo vm.vfs_cache_pressure=50 | sudo tee /etc/sysctl.d/99-swappiness.conf
+sudo sysctl -p /etc/sysctl.d/99-swappiness.conf
+
+#gérer le microcode intel (processeur intel)
+sudo pacman -S intel-ucode --noconfirm --needed
+
+#gérer la consommation (tlp et Gufw deja installé)
+sudo tlp start
+sudo systemctl enable tlp
+sudo systemctl enable tlp-sleep
+
+#firewall
+yaourt -S ufw --noconfirm --needed
+sudo ufw enable
+sudo systemctl enable ufw
+
+#Environnement de dev
+sudo pacman -S apache php php-apache mariadb --noconfirm --needed
+
+#conf php
+sudo cp -f ./php.ini /etc/php/
+
+#conf apache
+sudo cp -f ./httpd.conf /etc/httpd/conf/
+systemctl enable httpd
+systemctl start httpd
+cp -f ./test.php /srv/http/
+
+#mariadb
+sudo /usr/bin/mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+systemctl enable mysqld
+systemctl start mysqld
+
+#PhpMyAdmin
+sudo pacman -S phpmyadmin php-mcrypt --noconfirm --needed
+
+#installer flux
+yaourt -S xflux --noconfirm --needed
+#If error msg "sorry-we-only-support-8-and-10-bit-displays-right-now"
+#Need to specify to gdm using Xorg instead of Wayland
+# > edit file'/etc/gdm/custom.conf'
+#   > uncomment the line : 'WaylandEnable=false'
+
+
+#install vlc
+yaourt -S vlc  --noconfirm --needed
+
+#install mlocate
+yaourt -S mlocate --noconfirm --needed
+
+#nodejs
+yaourt -S nodejs  --noconfirm --needed
+
+#LOOK & FEEL
+yaourt -S aur/gnome-shell-theme-mist-git aur/mist-icon-theme community/arc-gtk-theme community/xcursor-breeze --noconfirm --needed
+
+#Keepass
+yaourt -S keepass --noconfirm --needed
+
+#Remmina (client SSH)
+yaourt -S remmina --noconfirm --needed
+
+#SUSE imagewriter
+sudo pacman -S imagewriter --noconfirm --needed
+
+#archey3
+yaourt -S archey3 --noconfirm --needed
+
+#ZSH
+yaourt -S zsh --noconfirm --needed
+
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+setopt EXTENDED_GLOB
+for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+cp -fa ./.zshrc ~/
+zsh
+chsh -s /bin/zsh
+source .zshrc
+
+
+prompt damoekri
+
+
+prompt damoekri
+

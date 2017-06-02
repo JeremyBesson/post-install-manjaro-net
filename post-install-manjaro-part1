@@ -1,0 +1,21 @@
+#!/bin/bash
+
+echo "post install Manjaro NET edition"		#    --noconfirm --needed
+
+
+#update all packages
+pacman-mirrors -g  --noconfirm --needed && sudo pacman -Syu --noconfirm --needed
+
+#install yaourt
+pacman -S yaourt --noconfirm --needed
+
+#install environnement gnome
+pacman -S gnome polkit-gnome gksu gufw wxgtk net-tools nmap gnome-tweak-tool lm_sensors  --noconfirm --needed
+
+#activation GDM connexion manager
+systemctl enable gdm.service -f
+
+#enable avahi-daemon
+systemctl enable avahi-daemon.service
+
+echo "1st part finished. Now reboot your computer then launch post-install-manjaro-gnome"
