@@ -1,7 +1,19 @@
+#!/bin/bash
+
 #gestion du faux conflit xorg
 mv /usr/lib/xorg/modules/extensions/libx64.so /usr/lib/xorg/modules/extensions/libx64.so.old
 
-#upgraade du systeme
-sudo pacman -Syu
+echo "post install Manjaro NET edition Deepin"		#    --noconfirm --needed
 
-#install yaout
+#update all packages
+pacman-mirrors -g  --noconfirm --needed && sudo pacman -Syu --noconfirm --needed
+
+#install yaourt
+pacman -S yaourt --noconfirm --needed
+
+#install deepin
+sudo pacman -S manjaro-deepin-settings deepin-manjaro --noconfirm --needed
+
+#installer MDM (display manager)
+sudo pacman -S mdm
+sudo systemctl enable mdm.service -f
