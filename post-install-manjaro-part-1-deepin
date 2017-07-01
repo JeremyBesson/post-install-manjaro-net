@@ -1,0 +1,7 @@
+#gestion du faux conflit xorg
+mv /usr/lib/xorg/modules/extensions/libx64.so /usr/lib/xorg/modules/extensions/libx64.so.old
+
+#upgraade du systeme
+sudo pacman -Syu
+
+#install yaout
