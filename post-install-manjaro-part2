@@ -3,7 +3,7 @@
 echo "Now Gnome should be installed. Installing useful packages & configuration"		#    --noconfirm --needed
 
 #utilitaires pour installs
-yaout -S base-devel --noconfirm --needed
+yaourt -S base-devel --noconfirm --needed
 yaourt -S binutils --noconfirm --needed
 
 #Vim
@@ -117,6 +117,4 @@ source .zshrc
 
 prompt damoekri
 
-
-prompt damoekri
 
